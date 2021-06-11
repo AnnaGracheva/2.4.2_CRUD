@@ -2,6 +2,8 @@ package web.service;
 
 import web.model.Role;
 
+import java.util.Set;
+
 public interface RoleService {
-    Role loadRoleFromDB(String role);
+    public Set<Role> loadRoleFromDB(Set<Role> roles);
 }

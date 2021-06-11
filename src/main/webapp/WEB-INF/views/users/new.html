@@ -21,7 +21,7 @@
   <input type="text" th:field="*{password}" id="password"/>
   <br/>
   <label for="role">Role: </label>
-  <select name="user_roles" id="role" multiple>
+  <select th:field = "*{roles}" id="role" multiple>
     <option th:value="ROLE_USER" selected>USER</option>
     <option th:value="ROLE_ADMIN">ADMIN</option>
   </select>

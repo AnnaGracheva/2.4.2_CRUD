@@ -43,7 +43,7 @@ public class AdminController {
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
         System.out.println(user);
-        user.addRoleToUser(roleServiceImpl.loadRoleFromDB("ROLE_USER"));
+        user.setRoles(roleServiceImpl.loadRoleFromDB(user.getRoles()));
         userServiceImpl.saveUser(user);
         System.out.println(user);
         return "redirect:/admin";
@@ -57,7 +57,12 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
-        userServiceImpl.updateUser(user);
+        User userToUpdate = userServiceImpl.userById(id);
+        userToUpdate.setUsername(user.getUsername());
+        userToUpdate.setFullName(user.getFullName());
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setPassword(user.getPassword());
+        userServiceImpl.updateUser(userToUpdate);
         return "redirect:/admin";
     }
 

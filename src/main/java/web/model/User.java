@@ -24,9 +24,8 @@ public class User implements UserDetails {
     private String email;
     @Column
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE )
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name="users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
@@ -115,6 +114,9 @@ public class User implements UserDetails {
     }
 
     public void addRoleToUser(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
         roles.add(role);
     }
 
