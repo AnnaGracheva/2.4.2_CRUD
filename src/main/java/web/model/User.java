@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -36,12 +37,12 @@ public class User implements UserDetails {
 
     }
 
-    public User(String username, String fullName, String email, String password, Set<Role> roles) { //Change it or not
+    public User(String username, String fullName, String email, String password) { //Change it or not
         this.username = username;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.roles = new HashSet<>();
     }
 
     public Long getId() { return id; }
@@ -115,5 +116,17 @@ public class User implements UserDetails {
 
     public void addRoleToUser(Role role) {
         roles.add(role);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

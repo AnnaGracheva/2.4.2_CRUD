@@ -42,8 +42,10 @@ public class AdminController {
 
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
+        System.out.println(user);
         user.addRoleToUser(roleServiceImpl.loadRoleFromDB("ROLE_USER"));
         userServiceImpl.saveUser(user);
+        System.out.println(user);
         return "redirect:/admin";
     }
 
