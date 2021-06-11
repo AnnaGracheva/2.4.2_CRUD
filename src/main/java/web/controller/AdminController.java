@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import web.model.Role;
 import web.model.User;
+import web.service.RoleServiceImpl;
 import web.service.UserServiceImpl;
 
 @Controller
@@ -12,10 +14,12 @@ import web.service.UserServiceImpl;
 public class AdminController {
 
     private final UserServiceImpl userServiceImpl;
+    private final RoleServiceImpl roleServiceImpl;
 
     @Autowired
-    public AdminController(UserServiceImpl userServiceImpl) {
+    public AdminController(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
         this.userServiceImpl = userServiceImpl;
+        this.roleServiceImpl = roleServiceImpl;
     }
 
     @GetMapping
@@ -38,6 +42,7 @@ public class AdminController {
 
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
+        user.addRoleToUser(roleServiceImpl.loadRoleFromDB("ROLE_USER"));
         userServiceImpl.saveUser(user);
         return "redirect:/admin";
     }

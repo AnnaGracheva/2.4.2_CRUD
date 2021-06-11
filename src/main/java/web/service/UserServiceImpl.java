@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserDao userDao;
 
     public void saveUser(User user) {
-
         userDao.saveUser(user);
     }
 
@@ -54,12 +53,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException(String.format("User '%s' not found", s));
         }
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
+        return user;
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-        return roles.stream().map(r ->new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
-    }
 }
